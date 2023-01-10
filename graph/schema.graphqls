@@ -1,0 +1,52 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Poll {
+  id: ID!
+  email: String!
+  text: String!
+  choises: [Choice!]!
+  results: [PollResult!]
+}
+type PollResult {
+  choiceid: ID!
+  email: String!
+}
+
+type Choice {
+  id: ID!
+  name: String!
+}
+type Query{
+  poll(pollId: ID!):Poll!
+  polls: [Poll!]!
+}
+input NewChoice {
+  name: String!
+}
+
+input NewPoll {
+  text: String!
+  email: String!
+  choises: [NewChoice!]!
+}
+
+input UserChoice{
+  pollId: ID!
+  choiceId: ID!
+  userEmail: String!
+}
+
+
+
+
+type Mutation {
+  CreatePoll(input: NewPoll): Poll!
+  ChoiceFromPoll(input: UserChoice): Poll!
+}
